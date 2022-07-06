@@ -30,16 +30,16 @@ public class Main {
                     slang.findBySlangword();
                     break;
                 case 2:
-                    slang.findByDefinition();2
+                    slang.findByDefinition();
                     break;
                 case 3:
-
+                    slang.showHistory();
                     break;
                 case 4:
-
+                    slang.AddNewSlangWord();
                     break;
                 case 5:
-
+                    slang.EditSlangWord();
                     break;
                 case 6:
 
