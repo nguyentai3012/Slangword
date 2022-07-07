@@ -1,8 +1,7 @@
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Stack;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 public class SlangWord {
     private HashMap<String, String> map;
@@ -38,6 +37,15 @@ public class SlangWord {
             e.printStackTrace();
         }
         return false;
+    }
+    public void writeToSlangwordFile() {
+        try (FileWriter fw = new FileWriter("slang.txt")) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                fw.write(entry.getKey() + "`" + entry.getValue() + "\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void findBySlangword() {
         System.out.println("Nhap slag word can lay : ");
@@ -140,5 +148,46 @@ public class SlangWord {
                     break;
             }
         }
+    }
+    public void DeleteSlangWord() {
+        System.out.println("Nhap slang word can xoa : ");
+        String SlagWord = sc.nextLine();
+        if (!map.containsKey(SlagWord)) {
+            System.out.println("Khong ton tai slang word nay!");
+        } else {
+            System.out.println("Ban co chac chan muon xoa slang word nay?");
+            System.out.println("1.Xoa ngay");
+            System.out.println("2.Huy");
+            String choice = sc.nextLine();
+            switch (choice) {
+                case "1":
+                    map.remove(SlagWord);
+                    System.out.println("Xoa slang word thanh cong!");
+                    break;
+                case "2":
+                    break;
+                default:
+                    System.out.println("Khong tim thay lua chon!!");
+            }
+        }
+    }
+
+    public void Reset() {
+        this.map.clear();
+        ReadFromSlangwordFile();
+        System.out.println("Reset thanh cong");
+    }
+
+    private void ReadFromSlangwordFile() {
+    }
+
+    public void RandomSlagWord() {
+        System.out.println("Random slang word :");
+        Random generator = new Random();
+        Object[] key = map.keySet().toArray();
+        int numberRd = generator.nextInt(key.length);
+        String randomKey = key[numberRd].toString();
+        System.out.println("Key : " + randomKey);
+        System.out.println("Dinh nghia : " + map.get(randomKey));
     }
 }
