@@ -181,7 +181,7 @@ public class SlangWord {
     private void ReadFromSlangwordFile() {
     }
 
-    public void RandomSlagWord() {
+    public void RandomSlangWord() {
         System.out.println("Random slang word :");
         Random generator = new Random();
         Object[] key = map.keySet().toArray();
