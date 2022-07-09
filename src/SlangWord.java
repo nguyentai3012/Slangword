@@ -10,21 +10,21 @@ public class SlangWord {
     public SlangWord() {
         this.historyStack = new Stack<>();
         this.map = new HashMap<>();
-        if (!ReadSlangwordFile()) {
-            ReadSlangwordFile();
+        if (!ReadFile()) {
+            ReadFile();
         }
     }
 
     public HashMap<String, String> getMap(){
         return this.map;
     }
-    public boolean ReadSlangwordFile() {
+    public boolean ReadFile() {
         map = new HashMap<>();
         try {
             File file = new File("slang.txt");
-            try (Scanner myReader = new Scanner(file)) {
-                while (myReader.hasNextLine()) {
-                    String data = myReader.nextLine();
+            try (Scanner reader = new Scanner(file)) {
+                while (reader.hasNextLine()) {
+                    String data = reader.nextLine();
                     String[] arrayOfString = data.split("`", 2);
                     if (arrayOfString.length < 2) {
                         continue;
@@ -38,7 +38,7 @@ public class SlangWord {
         }
         return false;
     }
-    public void writeToSlangwordFile() {
+    public void writeFile() {
         try (FileWriter fw = new FileWriter("slang.txt")) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 fw.write(entry.getKey() + "`" + entry.getValue() + "\n");
@@ -48,19 +48,19 @@ public class SlangWord {
         }
     }
     public void findBySlangword() {
-        System.out.println("Nhap slag word can lay : ");
+        System.out.println("Enter slang word: ");
         String SlagWord = sc.nextLine();
         historyStack.push(SlagWord);
 
         if (map.containsKey(SlagWord)) {
-            System.out.println("Slangword tim duoc la : ");
+            System.out.println("Slang word is : ");
             System.out.println(map.get(SlagWord));
         } else {
-            System.out.println("Khong ton tai slangword nay!");
+            System.out.println("Not existed!");
         }
     }
     public void findByDefinition() {
-        System.out.println("Nhap dinh nghia: ");
+        System.out.println("Definition: ");
         String definition = sc.nextLine();
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (entry.getValue().toLowerCase().contains(definition.toLowerCase())) {
@@ -69,7 +69,7 @@ public class SlangWord {
         }
     }
     public void showHistory() {
-        System.out.println("Danh sach cac slang word da tim sap xep theo moi nhat:");
+        System.out.println("History:");
         int count = 0;
         for (int i = this.historyStack.size() - 1; i >= 0; i--) {
             System.out.println(this.historyStack.get(i));
@@ -80,15 +80,15 @@ public class SlangWord {
         }
     }
     public void AddNewSlangWord() {
-        System.out.println("Nhap slang word can them : ");
+        System.out.println("Enter slang word: ");
         String slag = sc.nextLine();
-        System.out.println("Nhap dinh nghia cua slang word: ");
+        System.out.println("Enter definition: ");
         String mean = sc.nextLine();
         if (map.containsKey(slag)) {
-            System.out.println("Slang word da ton tai!!Ban muon ghi de hay them moi??");
-            System.out.println("0.Huy bo thao tac");
-            System.out.println("1.Them moi");
-            System.out.println("2.Ghi de");
+            System.out.println("Slang word existed!!");
+            System.out.println("0.Cancel");
+            System.out.println("1.Add new");
+            System.out.println("2.Edit");
             String choose = sc.nextLine();
             switch (choose) {
                 case "0":
@@ -100,74 +100,74 @@ public class SlangWord {
                     map.put(slag, map.get(slag) + "| " + mean);
                     break;
                 default:
-                    System.out.println("Khong co lua chon nay!");
+                    System.out.println("Wrong inputted!");
                     break;
             }
         }else{
             map.put(slag, mean);
-            System.out.println("Them slang word thanh cong");
+            System.out.println("Add new slang successful");
         }
     }
 
     public void EditSlangWord() {
-        System.out.println("Nhap slang word can tim : ");
-        String slag = sc.nextLine();
-        if (!map.containsKey(slag)) {
-            System.out.println("Khong tim thay slag word!");
+        System.out.println("Enter slang word : ");
+        String slang = sc.nextLine();
+        if (!map.containsKey(slang)) {
+            System.out.println("Slang word can't not find!");
         } else {
-            System.out.println("Nhap lua chon : ");
-            System.out.println("0.Huy thao tac");
-            System.out.println("1.Chinh sua slang word");
-            System.out.println("2.Chinh sua y nghia cua slang word");
-            System.out.println("3.Chinh sua slang word va y nghia");
+            System.out.println("Your choice: ");
+            System.out.println("0.Cancel");
+            System.out.println("1.Edit slang word");
+            System.out.println("2.Edit the meaning slang word");
+            System.out.println("3.Edit slang word and its definition");
             String choose = sc.nextLine();
             switch (choose) {
                 case "0":
                     break;
                 case "1":
-                    System.out.println("Nhap slag word moi");
-                    String NewSlagWord = sc.nextLine();
-                    map.put(NewSlagWord, map.get(slag));
-                    map.remove(slag);
+                    System.out.println("Enter new slang word:");
+                    String NewSlangWord = sc.nextLine();
+                    map.put(NewSlangWord, map.get(slang));
+                    map.remove(slang);
                     break;
                 case "2":
-                    System.out.println("Nhap y nghia moi cua slang word:");
+                    System.out.println("Enter new definition:");
                     String NewMeanning = sc.nextLine();
-                    map.put(slag, NewMeanning);
+                    map.put(slang, NewMeanning);
                     break;
                 case "3":
-                    System.out.println("Nhap slang word moi");
-                    NewSlagWord = sc.nextLine();
-                    System.out.println("Nhap y nghia moi cua slang word:");
+                    System.out.println("Enter new slang word:");
+                    NewSlangWord = sc.nextLine();
+                    System.out.println("Enter new definition:");
                     NewMeanning = sc.nextLine();
-                    map.remove(slag);
-                    map.put(NewSlagWord, NewMeanning);
+                    map.remove(slang);
+                    map.put(NewSlangWord, NewMeanning);
                     break;
                 default:
-                    System.out.println("Khong co lua chon nay!!");
+                    System.out.println("Wrong inputted!!");
                     break;
             }
         }
     }
     public void DeleteSlangWord() {
-        System.out.println("Nhap slang word can xoa : ");
-        String SlagWord = sc.nextLine();
-        if (!map.containsKey(SlagWord)) {
-            System.out.println("Khong ton tai slang word nay!");
+        System.out.println("Enter the slang word want to delete: ");
+        String SlangWord = sc.nextLine();
+        if (!map.containsKey(SlangWord)) {
+            System.out.println("Slang does not exist!");
         } else {
-            System.out.println("Ban co chac chan muon xoa slang word nay?");
-            System.out.println("1.Xoa ngay");
-            System.out.println("2.Huy");
+            System.out.println("Do you want to delete this slang word " + SlangWord +  "?");
+            System.out.println("1.OK");
+            System.out.println("2.Cancel");
             String choice = sc.nextLine();
             switch (choice) {
                 case "1":
-                    map.remove(SlagWord);
-                    System.out.println("Xoa slang word thanh cong!");
+                    map.remove(SlangWord);
+                    System.out.println("Delete success!");
                     break;
                 case "2":
                     break;
                 default:
-                    System.out.println("Khong tim thay lua chon!!");
+                    System.out.println("Wrong inputted!!");
             }
         }
     }
@@ -175,7 +175,7 @@ public class SlangWord {
     public void Reset() {
         this.map.clear();
         ReadFromSlangwordFile();
-        System.out.println("Reset thanh cong");
+        System.out.println("Reset success");
     }
 
     private void ReadFromSlangwordFile() {
@@ -189,5 +189,71 @@ public class SlangWord {
         String randomKey = key[numberRd].toString();
         System.out.println("Key : " + randomKey);
         System.out.println("Dinh nghia : " + map.get(randomKey));
+    }
+    public void QuizFirst() {
+        ArrayList<String> answers = new ArrayList<>();
+        String correctAnswer;
+        System.out.println("Welcome to Quiz Game!");
+        System.out.println("Choose the right meaning of the slang: ");
+        Random generator = new Random();
+        Object[] key = map.keySet().toArray();
+        int numberRd = generator.nextInt(key.length);
+        String randomKey = key[numberRd].toString();
+        correctAnswer = map.get(randomKey);
+        answers.add(correctAnswer);
+        for (int i = 0; i < 3; i++) {
+            numberRd = generator.nextInt(numberRd);
+            answers.add(map.get(key[numberRd].toString()));
+        }
+        Collections.shuffle(answers);
+        System.out.println("Slang word : " + randomKey);
+        for (int i = 0; i < answers.size(); i++) {
+            System.out.println(i + 1 + " " + answers.get(i));
+        }
+        System.out.print("Your answer: ");
+        String choice = sc.nextLine();
+
+        try {
+            if (answers.get(Integer.parseInt(choice) - 1).equals(correctAnswer)) {
+                System.out.println("Correct");
+            } else {
+                System.out.println("Incorrect");
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void QuizSecond() {
+        List<String> answers = new ArrayList<>();
+        String correctAnswer;
+        System.out.println("Welcome to Quiz Game!");
+        System.out.println("Choose the right slang word for the following definition: ");
+        Random generator = new Random();
+        Object[] key = map.keySet().toArray();
+        int numberRd = generator.nextInt(key.length);
+        String randomKey = key[numberRd].toString();
+        correctAnswer = randomKey;
+        answers.add(correctAnswer);
+        for (int i = 0; i < 3; i++) {
+            numberRd = generator.nextInt(numberRd);
+            answers.add(key[numberRd].toString());
+        }
+        Collections.shuffle(answers);
+        System.out.println("Definition : " + map.get(randomKey));
+        for (int i = 0; i < answers.size(); i++) {
+            System.out.println(i + 1 + " " + answers.get(i));
+        }
+        String choose = sc.nextLine();
+
+        try {
+            if (answers.get(Integer.parseInt(choose) - 1).equals(correctAnswer)) {
+                System.out.println("Correct");
+            } else {
+                System.out.println("Incorrect!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

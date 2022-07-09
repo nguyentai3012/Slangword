@@ -7,7 +7,7 @@ public class Main {
         int chon;
         Stack<String> historyStack;
         SlangWord slang = new SlangWord();
-        System.out.println(slang.ReadSlangwordFile());
+        System.out.println(slang.ReadFile());
         System.out.println(slang.getMap().get("BBC"));
         do
         {
@@ -42,16 +42,16 @@ public class Main {
                     slang.EditSlangWord();
                     break;
                 case 6:
-
+                    slang.DeleteSlangWord();
                     break;
                 case 7:
-
+                    slang.Reset();
                     break;
                 case 8:
-
+                    slang.QuizFirst();
                     break;
                 case 9:
-
+                    slang.QuizSecond();
                     break;
                 case 10:
 
