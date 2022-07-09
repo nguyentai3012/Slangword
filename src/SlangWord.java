@@ -1,6 +1,4 @@
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 
 public class SlangWord {
@@ -35,15 +33,7 @@ public class SlangWord {
         }
         return false;
     }
-    public void writeFile() {
-        try (FileWriter fw = new FileWriter("slang.txt")) {
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                fw.write(entry.getKey() + "`" + entry.getValue() + "\n");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     public void findBySlangword() {
         System.out.println("Enter slang word: ");
         String SlagWord = sc.nextLine();
