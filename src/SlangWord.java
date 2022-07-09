@@ -15,9 +15,6 @@ public class SlangWord {
         }
     }
 
-    public HashMap<String, String> getMap(){
-        return this.map;
-    }
     public boolean ReadFile() {
         map = new HashMap<>();
         try {
